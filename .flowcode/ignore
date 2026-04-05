@@ -1,0 +1,5 @@
+src/lib/rag/**
+src/lib/chat/realtime.ts
+src/lib/supabase.ts
+supabase/migrations/**
+server/api/**

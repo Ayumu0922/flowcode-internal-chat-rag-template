@@ -1,0 +1,27 @@
+This is an Internal Chat + RAG application built with:
+- React + Tailwind CSS + React Router (frontend)
+- Express.js API server (backend, port 3001)
+- Supabase (auth, realtime, storage, pgvector)
+- OpenAI API (embeddings via text-embedding-3-small, chat completion)
+
+Core architecture:
+1. Real-time chat via Supabase Realtime subscriptions on the messages table
+2. Document upload to Supabase Storage (documents bucket) with text extraction
+3. Chunking + embedding generation pipeline (500 char chunks, 50 char overlap)
+4. Vector similarity search via pgvector match_document_chunks() RPC
+5. RAG response generation with source citations
+
+Database tables:
+- channels: Chat channels with optional AI-enabled flag
+- messages: Chat messages with optional RAG source references
+- documents: Uploaded document metadata
+- document_chunks: Chunked text with vector embeddings (1536-dim)
+
+When extending this app:
+- Preserve the RAG pipeline (upload -> chunk -> embed -> search -> generate)
+- Use Supabase Realtime for any new real-time features
+- Keep the channel-based chat structure
+- Add new document types by extending the chunker
+- Industry-specific features should be added as new pages/modules
+- All API calls go through the Express server via /api/ proxy
+- Environment variables: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, OPENAI_API_KEY
